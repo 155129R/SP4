@@ -1,1 +1,4 @@
-sceneSetups: []
+sceneSetups:
+- path: Assets/My Scenes/Multi.unity
+  isLoaded: 1
+  isActive: 1

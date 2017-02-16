@@ -33,29 +33,10 @@ public class PlayerController : MonoBehaviour
            
         }
 
-       if(Input.GetKeyDown("space"))
-        {
-            Attack();
-        }
+      
 	}
 
-    public void Attack()
-    {
-        int count = 0;
-        // TestEnemy[] EnemyList = FindObjectsOfType(typeof (TestEnemy));
-        GameObject[] ObjectList = GameObject.FindGameObjectsWithTag("TestEnemy");
-        foreach (GameObject Object in ObjectList)
-        {
-            
-            if(Vector3.Distance( ObjectList[count].transform.position, transform.position)< 1000000)
-            {
-                //Object is TestEnemy
-             
-                ObjectList[count].GetComponent<TestEnemy>().TakeDamage();
-            }
-            count += 1;
-        }
-    }
+    
 
 
     //if moving, return true

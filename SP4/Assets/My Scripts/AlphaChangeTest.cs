@@ -10,6 +10,7 @@ public class AlphaChangeTest : MonoBehaviour
     public float maximum = 1f;
     private float startTime;
     private bool isNext = true;
+    private bool isCollide = false;
     // Use this for initialization
     void Start()
     {
@@ -22,29 +23,39 @@ public class AlphaChangeTest : MonoBehaviour
         if (GameStateManager.Instance.GetCharacterState() == GameStateManager.Character.POLLUX)
         {
 
-
-            float t = (Time.time - startTime) / duration;
-            float tem;
-
-            if (!isNext)
+            if (isCollide)
             {
+                float t = (Time.time - startTime) / duration;
+                float tem;
 
-                tem = Mathf.SmoothStep(maximum, minimum, t);
-                sprite_.color = new Color(1f, 1f, 1f, Mathf.SmoothStep(maximum, minimum, t / 2));
-            }
-            else
-            {
-                tem = Mathf.SmoothStep(minimum, maximum, t);
-                sprite_.color = new Color(1f, 1f, 1f, Mathf.SmoothStep(minimum, maximum, t));
+                if (!isNext)
+                {
 
-            }
+                    tem = Mathf.SmoothStep(maximum, minimum, t);
+                    sprite_.color = new Color(1f, 1f, 1f, Mathf.SmoothStep(maximum, minimum, t / 2));
+                    if (tem <= 0.1f)
+                        isCollide = false;
+                }
+                else
+                {
+                    tem = Mathf.SmoothStep(minimum, maximum, t);
+                    sprite_.color = new Color(1f, 1f, 1f, Mathf.SmoothStep(minimum, maximum, t));
 
-            if (isNext)
-            {
-                if (tem > 0.9f)
-                    isNext = false;
+                }
+
+                if (isNext)
+                {
+                    if (tem > 0.9f)
+                        isNext = false;
+                }
+               
             }
         }
     }
 
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if(coll.gameObject.tag == "Player")
+        isCollide = true;
+    }
 }

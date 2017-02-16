@@ -6,18 +6,21 @@ public class Player_Pollux : MonoBehaviour
     private int m_Health;
     private int m_Mana;
     public float m_MovementSpeed = 5.0f;
-    public GameObject character;
+    private GameObject character;
 
     // Use this for initialization
     void Start ()
     {
-	
+        character = GetComponent<GameObject>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-	
+	    if(Input.GetKeyDown("space"))
+        {
+            Attack();
+        }
 	}
     public int GetHealth()
     {
@@ -37,7 +40,7 @@ public class Player_Pollux : MonoBehaviour
     {
         int count = 0;
         // TestEnemy[] EnemyList = FindObjectsOfType(typeof (TestEnemy));
-        GameObject[] ObjectList = GameObject.FindGameObjectsWithTag("TestEnemy");
+        GameObject[] ObjectList = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject Object in ObjectList)
         {
 

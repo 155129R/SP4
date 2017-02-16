@@ -6,14 +6,14 @@ public class Player_Castor : Singleton<Player_Castor>
     private int m_Health;
     private int m_Mana;
     public float m_MovemoentSpeed = 5.0f;
-    public GameObject character;
+    private GameObject character;
 
      
         
 	// Use this for initialization
 	void Start ()
     {
-	    
+        character = GetComponent<GameObject>();
 	}
 	
 	// Update is called once per frame

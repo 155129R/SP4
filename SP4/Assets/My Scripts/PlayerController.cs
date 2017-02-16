@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 
-    public float attackForce = 5.0f;
-    public float attackSpeed = 0.5f;
+    //public float attackForce = 5.0f;
+    //public float attackSpeed = 0.5f;
     public float acceleration = 30.0f;
     public float maxSpeed = 10.0f;
     public FreeJoy freeJoy;
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour {
     private float attackSpeedTimer = 0.0f;
     private float attackForceValue;
     private Vector2 front = new Vector2(0, 1);
+    //public GameObject test;
 
 	// Use this for initialization
 	void Start () {
@@ -31,22 +33,27 @@ public class PlayerController : MonoBehaviour {
            
         }
 
-        if(attackForce > 0.0f)
+       if(Input.GetKeyDown("space"))
         {
-            rb.velocity += front * attackForceValue;
-            attackForceValue = lerp(attackForceValue, 0, 5 * dt);
+            Attack();
         }
-
-        if (attackSpeedTimer > 0.0f)
-            attackSpeedTimer -= dt;
 	}
 
     public void Attack()
     {
-        if (attackSpeedTimer <= 0.0f)
+        int count = 0;
+        // TestEnemy[] EnemyList = FindObjectsOfType(typeof (TestEnemy));
+        GameObject[] ObjectList = GameObject.FindGameObjectsWithTag("TestEnemy");
+        foreach (GameObject Object in ObjectList)
         {
-            attackSpeedTimer = attackSpeed;
-            attackForceValue = attackForce;
+            
+            if(Vector3.Distance( ObjectList[count].transform.position, transform.position)< 1000000)
+            {
+                //Object is TestEnemy
+             
+                ObjectList[count].GetComponent<TestEnemy>().TakeDamage();
+            }
+            count += 1;
         }
     }
 
@@ -56,10 +63,10 @@ public class PlayerController : MonoBehaviour {
     {
         if (dir.sqrMagnitude == 0)
         {
-            Debug.Log("NO");
+            //Debug.Log("NO");
             return false;
         }
-        Debug.Log("YES");
+        //Debug.Log("YES");
 
         front = dir.normalized;
 

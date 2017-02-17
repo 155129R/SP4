@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Web v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>WebPlayer:6</UnityBuildTarget>
     <UnityVersion>5.3.4f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -61,19 +63,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\My Scripts\AlphaChangeTest.cs" />
-    <Compile Include="Assets\My Scripts\FreeJoy.cs" />
-    <Compile Include="Assets\My Scripts\GameStateManager.cs" />
-    <Compile Include="Assets\My Scripts\Movement.cs" />
-    <Compile Include="Assets\My Scripts\MyInputs.cs" />
-    <Compile Include="Assets\My Scripts\NewBehaviourScript.cs" />
-    <Compile Include="Assets\My Scripts\ObjectRender.cs" />
-    <Compile Include="Assets\My Scripts\PlayerController.cs" />
-    <Compile Include="Assets\My Scripts\Player_Castor.cs" />
-    <Compile Include="Assets\My Scripts\Player_Pollux.cs" />
-    <Compile Include="Assets\My Scripts\Singleton.cs" />
-    <Compile Include="Assets\My Scripts\TestEnemy.cs" />
-    <Compile Include="Assets\My Scripts\TestInterPolate.cs" />
+    <Compile Include="Assets\Scripts\GameStateManager.cs" />
+    <Compile Include="Assets\Scripts\Grid.cs" />
+    <Compile Include="Assets\Scripts\Heap.cs" />
+    <Compile Include="Assets\Scripts\LevelGenerator.cs" />
+    <Compile Include="Assets\Scripts\MoveCamera.cs" />
+    <Compile Include="Assets\Scripts\Node.cs" />
+    <Compile Include="Assets\Scripts\ObjectRender.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding.cs" />
+    <Compile Include="Assets\Scripts\PixelPerfectCamera.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Player_Castor.cs" />
+    <Compile Include="Assets\Scripts\Player_Pollux.cs" />
+    <Compile Include="Assets\Scripts\Singleton.cs" />
+    <Compile Include="Assets\Scripts\Unit.cs" />
+    <Compile Include="Assets\Scripts\playerwalking.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

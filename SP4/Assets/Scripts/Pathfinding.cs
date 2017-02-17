@@ -8,13 +8,17 @@ public class Pathfinding : MonoBehaviour {
 
 	Grid grid;
 	static Pathfinding instance;
+    public bool pathSuccess = false;
 	
-	void Awake() {
+	void Awake() 
+	{
 		grid = GetComponent<Grid>();
+        UnityEngine.Debug.Log(grid.transform.position);
 		instance = this;
 	}
 
-	public static Vector2[] RequestPath(Vector2 from, Vector2 to) {
+	public static Vector2[] RequestPath(Vector2 from, Vector2 to) 
+	{
 		return instance.FindPath (from, to);
 	}
 	
@@ -25,14 +29,13 @@ public class Pathfinding : MonoBehaviour {
 		sw.Start();
 		
 		Vector2[] waypoints = new Vector2[0];
-		bool pathSuccess = false;
+		pathSuccess = false;
 
         if (GameObject.Find("LevelGenerator").GetComponent<LevelGenerator>().finished == true)
         {
             Node startNode = grid.NodeFromWorldPoint(from);
             Node targetNode = grid.NodeFromWorldPoint(to);
             startNode.parent = startNode;
-
 
             if (!startNode.walkable)
             {

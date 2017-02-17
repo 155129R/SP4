@@ -14,6 +14,7 @@ public class Unit : MonoBehaviour
 
 	void Start() 
     {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
 		StartCoroutine (RefreshPath ());
 	}
 

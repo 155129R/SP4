@@ -39,7 +39,7 @@ public class Player_Pollux : Singleton<Player_Pollux>
     public void Attack()//heals pollux
     {
         int count = 0;
-        // TestEnemy[] EnemyList = FindObjectsOfType(typeof (TestEnemy));
+        //Unit[] EnemyList = FindObjectsOfType(typeof(Unit));
         GameObject[] ObjectList = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject Object in ObjectList)
         {
@@ -48,7 +48,7 @@ public class Player_Pollux : Singleton<Player_Pollux>
             {
                 //Object is TestEnemy
 
-                //ObjectList[count].GetComponent<Unit>().TakeDamage();
+                ObjectList[count].GetComponent<Unit>().TakeDamage(10);
             }
             count += 1;
         }

@@ -5,7 +5,7 @@ public class Player_Castor : Singleton<Player_Castor>
 {
     private int m_Health;
     private int m_Mana;
-    public float m_MovementSpeed = 5.0f;
+    public float m_MovementSpeed = 25.0f;
     private GameObject character;
 
      

@@ -31,7 +31,7 @@ public class PlayerController : Singleton<PlayerController>
         {
             Player_Castor.Instance.UpdatePosition(axisX, axisY);
         }
-        else if (GameStateManager.Instance.GetCharacterState() == GameStateManager.Character.POLLUX)
+        if (GameStateManager.Instance.GetCharacterState() == GameStateManager.Character.POLLUX)
         {
             Player_Pollux.Instance.UpdatePosition(axisX, axisY);
         }

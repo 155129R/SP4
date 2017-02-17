@@ -80,8 +80,13 @@ public class Unit : MonoBehaviour
 		}
 	}
 
-    public void TakeDamage()
+    public void TakeDamage(int damage)
     {
+        m_Health -= damage;
+        if (m_Health <= 0)
+        {
+            Object.Destroy(gameObject);
+        }
 
     }
 

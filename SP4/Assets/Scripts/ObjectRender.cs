@@ -10,10 +10,10 @@ public class ObjectRender : MonoBehaviour
     public Sprite blindImg;
 
     //Alpha change stuff
-    public float fadespeed = 3.0f;
-    public float duration = 10f;
-    public float minimum = 0f;
-    public float maximum = 1f;
+    private float fadespeed = 3.0f;
+    private float duration = 10f;
+    private float minimum = 0f;
+    private float maximum = 1f;
     private float startTime;
     private bool isNext = true;
     private bool isCollide = false;
@@ -60,7 +60,7 @@ public class ObjectRender : MonoBehaviour
                 {
 
                     tem = Mathf.SmoothStep(maximum, minimum, t);
-                    imageComponent.color = new Color(1f, 1f, 1f, Mathf.SmoothStep(maximum, minimum, t *2f));
+                    imageComponent.color = new Color(1f, 1f, 1f, Mathf.SmoothStep(maximum, minimum, t *5f));
                     //if (tem <= 0f)
                     //{
                     //    isNext = true;

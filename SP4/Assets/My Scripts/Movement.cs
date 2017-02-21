@@ -4,9 +4,6 @@ using UnityEngine.Networking;
 
 public class Movement : NetworkBehaviour {
     Transform myTransform;
-    public GameObject bulletPrefab;
-    public Transform bulletSpawn;
-    public float bulletSpeed = 6.0f;
     public float Speed = 5.0f;
 
 	// Use this for initialization
@@ -27,24 +24,8 @@ public class Movement : NetworkBehaviour {
 
         myTransform.Translate(x, y  , 0);   
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Fire();
-            Debug.Log("test");
-        }
 	}
 
-    void Fire()
-    {
-        GameObject bullet = (GameObject)Instantiate(bulletPrefab);
-        bullet.transform.position = bulletSpawn.transform.position;
-        bullet.transform.rotation = bulletSpawn.transform.rotation;
-
-        //Add vel
-        bullet.GetComponent<Rigidbody2D>().velocity = bullet.transform.up * bulletSpeed;
-
-        Destroy(bullet, 1);
-    }
     public override void OnStartLocalPlayer()
     {
         Camera.main.GetComponent<MoveCamera>().setTarget(gameObject.transform);

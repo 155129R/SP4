@@ -11,18 +11,21 @@ public class enemySpawning : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-        InvokeRepeating("Spwan", spawnTime, spawnTime);
+        InvokeRepeating("Spawn", spawnTime, spawnTime);
 	}
 	
 	// Update is called once per frame
-    void Spwan() 
+    void Spawn() 
     {
-        int spawnPointIndex = Random.Range(0, GameObject.Find("LevelGenerator").GetComponent<LevelGenerator>().createdTiles.Count);
-
-        if (currentTotal < maxTotal)
+        if (GameObject.Find("LevelGenerator").GetComponent<LevelGenerator>().finished == true)
         {
-            Instantiate(enemy, GameObject.Find("LevelGenerator").GetComponent<LevelGenerator>().createdTiles[spawnPointIndex], Quaternion.identity);
-            currentTotal++;
+            int spawnPointIndex = Random.Range(0, GameObject.Find("LevelGenerator").GetComponent<LevelGenerator>().createdTiles.Count);
+
+            if (currentTotal < maxTotal)
+            {
+                Instantiate(enemy, GameObject.Find("LevelGenerator").GetComponent<LevelGenerator>().createdTiles[spawnPointIndex], Quaternion.identity);
+                currentTotal++;
+            }
         }
 	}
 }

@@ -24,13 +24,13 @@ public class ObjectRender : MonoBehaviour
     {
         startTime = Time.time;
         imageComponent = GetComponent<SpriteRenderer>();
-        if (GameStateManager.Instance.GetCharacterState()== GameStateManager.Character.CASTOR)
+        if (GameStateManager.Instance.GetCharacterState() == GameStateManager.Character.CASTOR)
         {
             //NORMAL RENDER STUFF
             imageComponent.sprite = normalImg;
          
         }
-        else if(GameStateManager.Instance.GetCharacterState() == GameStateManager.Character.POLLUX)
+        else if (GameStateManager.Instance.GetCharacterState() == GameStateManager.Character.POLLUX)
         {
             imageComponent.sprite = blindImg;
             imageComponent.color = new Color(1f, 1f, 1f, 0f);
@@ -40,16 +40,7 @@ public class ObjectRender : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (GameStateManager.Instance.GetCharacterState() == GameStateManager.Character.CASTOR)
-        //{
-        //    //NORMAL RENDER STUFF
-        //    imageComponent.sprite = normalImg;
-        //}
-        //else if (GameStateManager.Instance.GetCharacterState() == GameStateManager.Character.POLLUX)
-        //{
-        //    imageComponent.sprite = blindImg;
-        //}
-
+        
             if (GameStateManager.Instance.GetCharacterState() == GameStateManager.Character.POLLUX)
             {
 
@@ -61,13 +52,7 @@ public class ObjectRender : MonoBehaviour
 
                     tem = Mathf.SmoothStep(maximum, minimum, t);
                     imageComponent.color = new Color(1f, 1f, 1f, Mathf.SmoothStep(maximum, minimum, t *5f));
-                    //if (tem <= 0f)
-                    //{
-                    //    isNext = true;
-                    //    isCollide = false;
-                    //    startTime = Time.time;
-                        
-                    //}
+                
 
 
                 }
@@ -75,8 +60,7 @@ public class ObjectRender : MonoBehaviour
                 {
                     tem = Mathf.SmoothStep(minimum, maximum, (t));
                     imageComponent.color = new Color(1f, 1f, 1f, Mathf.SmoothStep(minimum, maximum, t * 8f));
-                    if (tem > 0.9f)
-                        isNext = false;
+
 
                 }
 
@@ -86,8 +70,10 @@ public class ObjectRender : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.gameObject.tag == "Player")
+        if (coll.gameObject.tag == "Player" && GameStateManager.Instance.GetCharacterState() == GameStateManager.Character.POLLUX)
+
         {
+            Debug.Log(GetComponent<GameObject>().GetType());
             isUntouched = false;
             isCollide = true;
             startTime = Time.time;
@@ -97,7 +83,7 @@ public class ObjectRender : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D coll)
     {
-        if (coll.gameObject.tag == "Player")
+        if (coll.gameObject.tag == "Player" && GameStateManager.Instance.GetCharacterState() == GameStateManager.Character.POLLUX)
         {
             isCollide = false;
             startTime = Time.time;

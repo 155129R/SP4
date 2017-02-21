@@ -11,7 +11,7 @@ namespace Prototype.NetworkLobby
     //Any LobbyHook can then grab it and pass those value to the game player prefab (see the Pong Example in the Samples Scenes)
     public class LobbyPlayer : NetworkLobbyPlayer
     {
-        static Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
+        static Color[] Colors = new Color[] { Color.blue, Color.red };
         //used on server to avoid assigning the same color to two player
         static List<int> _colorInUse = new List<int>();
 
@@ -105,11 +105,6 @@ namespace Prototype.NetworkLobby
             remoteIcone.gameObject.SetActive(false);
             localIcone.gameObject.SetActive(true);
 
-            CheckRemoveButton();
-
-            if (playerColor == Color.white)
-                CmdColorChange();
-
             ChangeReadyButtonColor(JoinColor);
 
             readyButton.transform.GetChild(0).GetComponent<Text>().text = "JOIN";
@@ -120,14 +115,11 @@ namespace Prototype.NetworkLobby
                 CmdNameChanged("Player" + (LobbyPlayerList._instance.playerListContentTransform.childCount-1));
 
             //we switch from simple name display to name input
-            colorButton.interactable = true;
-            nameInput.interactable = true;
+            colorButton.interactable = false;
+            nameInput.interactable = false;
 
             nameInput.onEndEdit.RemoveAllListeners();
             nameInput.onEndEdit.AddListener(OnNameChanged);
-
-            colorButton.onClick.RemoveAllListeners();
-            colorButton.onClick.AddListener(OnColorClicked);
 
             readyButton.onClick.RemoveAllListeners();
             readyButton.onClick.AddListener(OnReadyClicked);
@@ -138,17 +130,6 @@ namespace Prototype.NetworkLobby
         }
 
         //This enable/disable the remove button depending on if that is the only local player or not
-        public void CheckRemoveButton()
-        {
-            if (!isLocalPlayer)
-                return;
-
-            int localPlayerCount = 0;
-            foreach (UnityEngine.Networking.PlayerController p in ClientScene.localPlayers)
-                localPlayerCount += (p == null || p.playerControllerId == -1) ? 0 : 1;
-
-            removePlayerButton.interactable = localPlayerCount > 1;
-        }
 
         public override void OnClientReady(bool readyState)
         {
@@ -199,10 +180,6 @@ namespace Prototype.NetworkLobby
 
         //Note that those handler use Command function, as we need to change the value on the server not locally
         //so that all client get the new value throught syncvar
-        public void OnColorClicked()
-        {
-            CmdColorChange();
-        }
 
         public void OnReadyClicked()
         {
@@ -212,17 +189,6 @@ namespace Prototype.NetworkLobby
         public void OnNameChanged(string str)
         {
             CmdNameChanged(str);
-        }
-
-        public void OnRemovePlayerClick()
-        {
-            if (isLocalPlayer)
-            {
-                RemovePlayer();
-            }
-            else if (isServer)
-                LobbyManager.s_Singleton.KickPlayer(connectionToClient);
-                
         }
 
         public void ToggleJoinButton(bool enabled)
@@ -238,53 +204,7 @@ namespace Prototype.NetworkLobby
             LobbyManager.s_Singleton.countdownPanel.gameObject.SetActive(countdown != 0);
         }
 
-        [ClientRpc]
-        public void RpcUpdateRemoveButton()
-        {
-            CheckRemoveButton();
-        }
-
         //====== Server Command
-
-        [Command]
-        public void CmdColorChange()
-        {
-            int idx = System.Array.IndexOf(Colors, playerColor);
-
-            int inUseIdx = _colorInUse.IndexOf(idx);
-
-            if (idx < 0) idx = 0;
-
-            idx = (idx + 1) % Colors.Length;
-
-            bool alreadyInUse = false;
-
-            do
-            {
-                alreadyInUse = false;
-                for (int i = 0; i < _colorInUse.Count; ++i)
-                {
-                    if (_colorInUse[i] == idx)
-                    {//that color is already in use
-                        alreadyInUse = true;
-                        idx = (idx + 1) % Colors.Length;
-                    }
-                }
-            }
-            while (alreadyInUse);
-
-            if (inUseIdx >= 0)
-            {//if we already add an entry in the colorTabs, we change it
-                _colorInUse[inUseIdx] = idx;
-            }
-            else
-            {//else we add it
-                _colorInUse.Add(idx);
-            }
-
-            playerColor = Colors[idx];
-        }
-
         [Command]
         public void CmdNameChanged(string name)
         {

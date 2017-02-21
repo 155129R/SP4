@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
@@ -48,6 +49,8 @@ public class LevelGenerator : NetworkBehaviour {
 
     public bool finished = false;
 
+    public Text seedDisplay;
+
     //Initialization
     void Start () {
 
@@ -60,7 +63,7 @@ public class LevelGenerator : NetworkBehaviour {
             seed = Random.Range(0, 100);
 
             Random.seed = seed;
-            Debug.Log(seed);
+            //Debug.Log(seed);
             
         }
         else
@@ -75,7 +78,7 @@ public class LevelGenerator : NetworkBehaviour {
 
         }
         StartCoroutine(GenerateLevel());
-
+       // seedDisplay.text = seed.ToString();
       
 	}  
 

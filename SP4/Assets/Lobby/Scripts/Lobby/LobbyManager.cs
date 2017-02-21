@@ -273,11 +273,11 @@ namespace Prototype.NetworkLobby
         //But OnLobbyClientConnect isn't called on hosting player. So we override the lobbyPlayer creation
         public override GameObject OnLobbyServerCreateLobbyPlayer(NetworkConnection conn, short playerControllerId)
         {
+  
             GameObject obj = Instantiate(lobbyPlayerPrefab.gameObject) as GameObject;
 
             LobbyPlayer newPlayer = obj.GetComponent<LobbyPlayer>();
             newPlayer.ToggleJoinButton(numPlayers + 1 >= minPlayers);
-
 
             for (int i = 0; i < lobbySlots.Length; ++i)
             {
@@ -285,7 +285,7 @@ namespace Prototype.NetworkLobby
 
                 if (p != null)
                 {
-                    p.RpcUpdateRemoveButton();
+
                     p.ToggleJoinButton(numPlayers + 1 >= minPlayers);
                 }
             }
@@ -301,7 +301,7 @@ namespace Prototype.NetworkLobby
 
                 if (p != null)
                 {
-                    p.RpcUpdateRemoveButton();
+
                     p.ToggleJoinButton(numPlayers + 1 >= minPlayers);
                 }
             }
@@ -315,7 +315,7 @@ namespace Prototype.NetworkLobby
 
                 if (p != null)
                 {
-                    p.RpcUpdateRemoveButton();
+
                     p.ToggleJoinButton(numPlayers >= minPlayers);
                 }
             }
@@ -329,6 +329,7 @@ namespace Prototype.NetworkLobby
 
             if (_lobbyHooks)
                 _lobbyHooks.OnLobbyServerSceneLoadedForPlayer(this, lobbyPlayer, gamePlayer);
+
 
             return true;
         }
@@ -415,5 +416,49 @@ namespace Prototype.NetworkLobby
             ChangeTo(mainMenuPanel);
             infoPanel.Display("Cient error : " + (errorCode == 6 ? "timeout" : errorCode.ToString()), "Close", null);
         }
+        public override GameObject OnLobbyServerCreateGamePlayer(NetworkConnection conn, short playerControllerId)
+        {
+            int prefabIndex = 0;
+
+            //For each lobby player in scene
+            foreach (LobbyPlayer lp in FindObjectsOfType<LobbyPlayer>())
+            {
+                int connectionID = 0;
+                NetworkIdentity ni = lp.GetComponent<NetworkIdentity>();
+
+                //Get connection id from network identity.
+                //The connection id value depends on whether its a client player or server player
+                if (ni.connectionToClient != null)
+                    connectionID = ni.connectionToClient.connectionId;
+                else if (ni.connectionToServer != null)
+                    connectionID = ni.connectionToServer.connectionId;
+
+                //If connection id on lobby player is same as connection id
+                if (connectionID == conn.connectionId)
+                {                    
+                    //then set prefab index to spawn value
+
+                    prefabIndex++;
+                }
+            }
+
+            //Spawn game object from spawn list
+            if (conn.connectionId==0)
+            {
+                PlayerPrefs.SetInt("Character", 0);
+               // GameStateManager.Instance.m_Character = GameStateManager.Character.POLLUX;
+                
+            }
+            else if (conn.connectionId == 1)
+            {
+                PlayerPrefs.SetInt("Character", 1);
+            }
+            GameObject playerPrefab = Instantiate(spawnPrefabs[conn.connectionId]);
+            gamePlayerPrefab = playerPrefab;
+            return playerPrefab;
+
+            //return base.OnLobbyServerCreateGamePlayer(conn, playerControllerId);
+        }
     }
+
 }

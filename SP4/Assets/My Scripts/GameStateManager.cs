@@ -12,14 +12,15 @@ public class GameStateManager : Singleton<GameStateManager>
 
     public enum Character
     {
-        NIL,
         CASTOR,
         POLLUX,
+        NIL,
+
     }
 
     private GameState m_GameState = GameState.Game_STATE;
 
-    private Character m_Character = Character.POLLUX;
+    public Character m_Character = Character.NIL;
 
     public GameState GetGameState()
     {
@@ -44,15 +45,23 @@ public class GameStateManager : Singleton<GameStateManager>
     }
         
 	// Use this for initialization
-	void Start ()
+	void Start()
     {
-        //m_GameState = GameState.Game_STATE;
-        //m_Character = Character.POLLUX;
+        if(PlayerPrefs.GetInt("Character")==0)
+        {
+            m_Character = Character.POLLUX;
+        }
+        else if (PlayerPrefs.GetInt("Character") == 1)
+        {
+            m_Character = Character.CASTOR;
+        }
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-	
+        
+        Debug.Log(PlayerPrefs.GetInt("Character"));
+        Debug.Log(m_Character);
 	}
 }

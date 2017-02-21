@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-public class PlayerController : NetworkBehaviour {
+public class PlayerController : NetworkBehaviour
+{
 
     public float attackForce = 5.0f;
     public float attackSpeed = 0.5f;
@@ -32,7 +33,7 @@ public class PlayerController : NetworkBehaviour {
         if(!Move(freeJoy.GetInput(), Time.deltaTime))
         {
             // rb.velocity.Set(0, 0); //doesnt seem to be working for me
-            Debug.Log("NO");
+            //Debug.Log("NO");
 
             Vector2 zeroVel = new Vector2();
             rb.velocity = zeroVel;
